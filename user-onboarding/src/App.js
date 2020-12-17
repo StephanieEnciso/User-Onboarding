@@ -5,6 +5,7 @@ import axios from 'axios';
 import UserForm from './components/Form';
 import schema from './components/formSchema'
 import * as yup from 'yup';
+import User from './components/User'
 
 const initialUserFormValues = {
   name: '',
@@ -48,7 +49,7 @@ function App() {
       name: formValues.name.trim(),
       email: formValues.email.trim(),
       password: formValues.password,
-      terms: formValues.terms,
+      terms: formValues.terms === true ? 'Yes' : 'No',
     }
     postNewUser(newUser);
   };
@@ -78,11 +79,17 @@ function App() {
 
   return (
     <div className="App">
+      <h1>Let Us Get To Know You Better!</h1>
+      <h2>Fill out the form below.</h2>
       <UserForm values = {formValues}
       submit = {submitUserForm}
       change = {change}
       errors = {formErrors}
       disabled = {disabledButton}/>
+
+      {users.map((user) => {
+        return <User key = {user.id} userInfo = {user} />
+      })}
     </div>
   );
 };
