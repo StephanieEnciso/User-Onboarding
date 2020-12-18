@@ -8,6 +8,7 @@ describe("User Form App", () => {
     const passwordInput = () => cy.get('input[name = "password"]');
     const termsInput = () => cy.get('input[name = "terms"]');
     const submitBtn = () => cy.get('button');
+    const error = () => cy.get()
 
     it('testing to make sure everything is working.', () => {
         expect(true).to.equal(true);
@@ -45,8 +46,16 @@ describe("User Form App", () => {
         passwordInput().type('AdorablePup');
         termsInput().check();
         submitBtn().click();
+    });
 
-    })
-
+    it('Form validation occurs if an input is empty', () =>{
+        nameInput().type('An');
+        emailInput().type('an');
+        passwordInput().type('an');
+        nameInput().clear();
+        emailInput().clear();
+        passwordInput().clear();
+        submitBtn().should('be.disabled') //since there is no information typed it should not allow a user to submit.
+    });
 
 });
